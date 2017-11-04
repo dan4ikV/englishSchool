@@ -7,13 +7,15 @@ import java.util.Enumeration;
 public class WebUser extends Person {
     private String login;
     private String password;
+    private int id;
     private UserStatus status;
     private UserRights rights;
 
-    public WebUser(String firstName, String secondName, LocalDate birthDate, String login, String password, UserStatus status, UserRights rights) {
+    public WebUser(String firstName, String secondName, int id, LocalDate birthDate, String login, String password, UserStatus status, UserRights rights) {
         super(firstName, secondName, birthDate);
         this.login = login;
         this.password = password;
+        this.id = id;
         this.status = status;
         this.rights = rights;
     }
@@ -21,6 +23,7 @@ public class WebUser extends Person {
     public WebUser() {
         this.login = "login";
         this.password = "pass";
+        this.id = setDBId;
         this.status = UserStatus.New;
         this.rights = UserRights.Default;
     }
@@ -57,6 +60,14 @@ public class WebUser extends Person {
         this.rights = rights;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public void setStatus(String status) {
         switch (status) {
             case "New":
@@ -75,14 +86,14 @@ public class WebUser extends Person {
     }
 
     public void setRights(String rights) {
-        switch (rights){
-            case"Default" :
+        switch (rights) {
+            case "Default":
                 this.rights = UserRights.Default;
                 break;
-            case"Moderator" :
+            case "Moderator":
                 this.rights = UserRights.Moderator;
                 break;
-            case"Admin" :
+            case "Admin":
                 this.rights = UserRights.Admin;
                 break;
         }
