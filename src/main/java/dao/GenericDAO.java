@@ -5,7 +5,7 @@ import java.util.List;
 import java.io.Serializable;
 import java.util.List;
 
-public interface GenericDao<T extends Identified<PK>, PK extends Serializable> {
+public interface GenericDAO<T extends Identified<PK>, PK extends Serializable> {
     public T create() throws DAOOwnException;
 
     public T extCreate(T obj) throws DAOOwnException;

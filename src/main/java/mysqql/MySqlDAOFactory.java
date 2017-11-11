@@ -5,14 +5,13 @@ import dao.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.Map;
 
 public class MySqlDAOFactory implements DAOFactory<Connection> {
     private static final String DRIVERNAME = "com.mysql.jdbc.Driver";
-    private static final String URL = "jdbc:mysql://localhost:3306/danulo";
-    private static final String USERNAME = "root";
-    private static final String PASSWORD = "root";
+    private static final String URL = "jdbc:mysql://servlab.mysql.ukraine.com.ua:3306/servlab_danylo?useSSL=false";
+    private static final String USERNAME = "servlab_danylo";
+    private static final String PASSWORD = "224tlij5";
     private Map<Class, DAOCreator> daoCreatorMap;
 
 
@@ -33,7 +32,7 @@ public class MySqlDAOFactory implements DAOFactory<Connection> {
     }
 
     @Override
-    public GenericDao getDAO(Connection connection, Class daoClass) throws DAOOwnException {
+    public GenericDAO getDAO(Connection connection, Class daoClass) throws DAOOwnException {
         DAOCreator creator = daoCreatorMap.get(daoClass);
 
         if (creator == null) {

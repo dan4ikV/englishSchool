@@ -1,15 +1,18 @@
 package beans;
 
+import dao.Identified;
+
 import javax.xml.bind.annotation.XmlType;
 import java.time.LocalDate;
 import java.util.Enumeration;
 
-public class WebUser extends Person {
+public class WebUser extends Person implements Identified<Integer>{
     private String login;
     private String password;
     private int id;
     private UserStatus status;
-    private UserRights rights;
+    private UserRights rights
+
 
     public WebUser(String firstName, String secondName, int id, LocalDate birthDate, String login, String password, UserStatus status, UserRights rights) {
         super(firstName, secondName, birthDate);
@@ -23,7 +26,7 @@ public class WebUser extends Person {
     public WebUser() {
         this.login = "login";
         this.password = "pass";
-        this.id = setDBId;
+        this.id = setId();
         this.status = UserStatus.New;
         this.rights = UserRights.Default;
     }
@@ -60,11 +63,14 @@ public class WebUser extends Person {
         this.rights = rights;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
     public void setId(int id) {
+        this.id = id;
+    }
+    public void setDBID(int id) {
         this.id = id;
     }
 

@@ -3,7 +3,7 @@ package dao;
 import java.sql.*;
 import java.util.List;
 
-public abstract class AbstractDAO<T extends Identified<PK>, PK extends Integer> implements GenericDao<T, PK> {
+public abstract class AbstractDAO<T extends Identified<PK>, PK extends Integer> implements GenericDAO<T, PK> {
     private Connection connection;
 
     public AbstractDAO(Connection connection) {
@@ -37,7 +37,7 @@ public abstract class AbstractDAO<T extends Identified<PK>, PK extends Integer> 
             throw new DAOOwnException(e);
         }
 
-        query = getSelectQuery() + " WHERE  id = last_insert_id";
+        query = getSelectQuery() + "(SELECT last_insert_id())";
 
         try (PreparedStatement prSt = connection.prepareStatement(query)) {
             prepareStInsert(prSt, obj);
@@ -103,7 +103,7 @@ public abstract class AbstractDAO<T extends Identified<PK>, PK extends Integer> 
 
     @Override
     public List<T> getAll() throws DAOOwnException {
-        List<T> someList;
+        List<T> someList = null;
         String query = getSelectQuery();
         try (PreparedStatement prSt = connection.prepareStatement(query)) {
             ResultSet rs = prSt.executeQuery();
