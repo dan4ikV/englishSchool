@@ -43,6 +43,7 @@ public class MySqlCustomerDAO extends AbstractDAO<Customer, Integer> {
         return "DELETE FROM customers WHERE id = ?;";
     }
 
+    
     @Override
     public void prepareStInsert(PreparedStatement stm, Customer obj) throws DAOOwnException {
         try {
