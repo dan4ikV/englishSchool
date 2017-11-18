@@ -11,7 +11,7 @@ public class WebUser extends Person implements Identified<Integer>{
     private String password;
     private int id;
     private UserStatus status;
-    private UserRights rights
+    private UserRights rights;
 
 
     public WebUser(String firstName, String secondName, int id, LocalDate birthDate, String login, String password, UserStatus status, UserRights rights) {
@@ -26,7 +26,6 @@ public class WebUser extends Person implements Identified<Integer>{
     public WebUser() {
         this.login = "login";
         this.password = "pass";
-        this.id = setId();
         this.status = UserStatus.New;
         this.rights = UserRights.Default;
     }
@@ -70,8 +69,9 @@ public class WebUser extends Person implements Identified<Integer>{
     public void setId(int id) {
         this.id = id;
     }
-    public void setDBID(int id) {
-        this.id = id;
+
+    public void setId() {
+
     }
 
     public void setStatus(String status) {
