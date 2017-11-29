@@ -1,12 +1,22 @@
 package beans;
 
+import dao.Identified;
+
 import java.time.LocalDate;
 
-public class Person {
+public class Person implements Identified<Integer> {
     private String firstName;
     private String secondName;
     private LocalDate birthDate;
+    private int id;
 
+
+    public Person(String firstName, String secondName, LocalDate birthDate, int id) {
+        this.firstName = firstName;
+        this.secondName = secondName;
+        this.birthDate = birthDate;
+        this.id = id;
+    }
 
     public Person(String firstName, String secondName, LocalDate birthDate) {
         this.firstName = firstName;
@@ -18,6 +28,15 @@ public class Person {
         this.firstName = "name";
         this.secondName = "surname";
         this.birthDate = LocalDate.now();
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+
+    protected void setId(int id) {
+        this.id = id;
     }
 
     public void setFirstName(String firstName) {

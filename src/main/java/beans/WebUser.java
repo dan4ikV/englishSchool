@@ -9,16 +9,14 @@ import java.util.Enumeration;
 public class WebUser extends Person implements Identified<Integer>{
     private String login;
     private String password;
-    private int id;
     private UserStatus status;
     private UserRights rights;
 
 
     public WebUser(String firstName, String secondName, int id, LocalDate birthDate, String login, String password, UserStatus status, UserRights rights) {
-        super(firstName, secondName, birthDate);
+        super(firstName, secondName, birthDate, id);
         this.login = login;
         this.password = password;
-        this.id = id;
         this.status = status;
         this.rights = rights;
     }
@@ -60,18 +58,6 @@ public class WebUser extends Person implements Identified<Integer>{
 
     public void setRights(UserRights rights) {
         this.rights = rights;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setId() {
-
     }
 
     public void setStatus(String status) {

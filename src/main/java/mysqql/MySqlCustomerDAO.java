@@ -30,7 +30,9 @@ public class MySqlCustomerDAO extends AbstractDAO<Customer, Integer> {
 
     @Override
     public String getCreateQuery() {
-        return "INSERT INTO customers (firstName, secondName, birthDate, login, password, status, rights, phone, email, address) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+        return "INSERT INTO customers(phoneNumber, email, address, webUsers_id)\n" +
+                "VALUES(?, ?, ?,\n" +
+                "       (SELECT id FROM webUsers WHERE webUsers.login = ?));";
     }
 
     @Override
@@ -47,17 +49,10 @@ public class MySqlCustomerDAO extends AbstractDAO<Customer, Integer> {
     @Override
     public void prepareStInsert(PreparedStatement stm, Customer obj) throws DAOOwnException {
         try {
-            stm.setNull(1, Types.INTEGER);
-            stm.setString(2, obj.getFirstName());
-            stm.setString(3, obj.getSecondName());
-            stm.setDate(4, Date.valueOf(obj.getBirthDate()));
-            stm.setString(5, obj.getLogin());
-            stm.setString(6, obj.getPassword());
-            stm.setString(7, obj.getStatus().toString());
-            stm.setString(7, obj.getRights().toString());
-            stm.setString(8, obj.getPhoneNumber());
-            stm.setString(9, obj.getEmail());
-            stm.setString(10, obj.getAddress());
+            stm.setString(1, obj.getPhoneNumber());
+            stm.setString(2, obj.getEmail());
+            stm.setString(3, obj.getAddress());
+            stm.setString(4, "danylo");
         } catch (Exception e) {
             throw new DAOOwnException(e);
         }
