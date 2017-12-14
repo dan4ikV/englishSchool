@@ -40,7 +40,6 @@ public abstract class AbstractDAO<T extends Identified<PK>, PK extends Integer> 
         query = getSelectQuery() + "(SELECT last_insert_id())";
 
         try (PreparedStatement prSt = connection.prepareStatement(query)) {
-            prepareStInsert(prSt, obj);
             ResultSet rs = prSt.executeQuery();
             List<T> list = parsingResultSet(rs);
             if ((list == null) || (list.size() != 1)) {

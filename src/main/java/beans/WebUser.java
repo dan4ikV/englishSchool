@@ -3,7 +3,10 @@ package beans;
 import dao.Identified;
 
 import javax.xml.bind.annotation.XmlType;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.Enumeration;
 
 public class WebUser extends Person implements Identified<Integer>{
@@ -26,6 +29,14 @@ public class WebUser extends Person implements Identified<Integer>{
         this.password = "pass";
         this.status = UserStatus.New;
         this.rights = UserRights.Default;
+    }
+
+    public WebUser(String firstName, String secondName, Date birthDate, String login, String password) {
+        setFirstName(firstName);
+        setSecondName(secondName);
+        setBirthDate(birthDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+        this.login = login;
+        this.password = password;
     }
 
     public String getLogin() {
