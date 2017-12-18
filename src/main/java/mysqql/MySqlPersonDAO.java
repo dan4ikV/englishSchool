@@ -22,7 +22,7 @@ public class MySqlPersonDAO extends AbstractDAO<Person, Integer> {
 
     @Override
     public String getSelectQuery() {
-        return "SELECT id, firstName, secondName, birthDate from persons WHERE id =";
+        return "SELECT id, firstName, secondName, birthDate from persons ";
     }
 
     @Override
@@ -38,6 +38,11 @@ public class MySqlPersonDAO extends AbstractDAO<Person, Integer> {
     @Override
     public String getDeleteQuery() {
         return "DELETE from persons WHERE id = ?;";
+    }
+
+    @Override
+    public String getWhereForSelectQuery() {
+        return "WHERE id = ";
     }
 
     @Override

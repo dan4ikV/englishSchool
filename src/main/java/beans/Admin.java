@@ -8,8 +8,8 @@ public class Admin extends WebUser {
 
     private AdminTypes type;
 
-    public Admin(String firstName, String secondName, int id, LocalDate birthDate, String login, String password, UserStatus status, UserRights rights, AdminTypes type) {
-        super(firstName, secondName, id, birthDate, login, password, status, rights);
+    public Admin(String firstName, String secondName, LocalDate birthDate, String login, String password, UserStatus status, UserRights rights, AdminTypes type) {
+        super(firstName, secondName, birthDate, login, password, status, rights);
         this.type = type;
     }
 

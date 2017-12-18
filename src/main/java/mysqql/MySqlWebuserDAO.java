@@ -28,18 +28,28 @@ public class MySqlWebuserDAO extends AbstractDAO<WebUser , Integer>{
     }
     @Override
     public String getSelectQuery() {
-        return "SELECT id , login, password WHERE id = ?;";
+        return "SELECT wu.id, wu.login, wu.password , " +
+                "pr.firstName, pr.secondName, pr.birthDate, rg.userRights,  st.userStatus FROM webUsers as wu " +
+                "JOIN persons as pr on wu.persons_id = pr.id " +
+                "JOIN rights as rg on wu.rights_id = rg.id " +
+                "JOIN status as st on wu.status_id = st.id ";
     }
 
     @Override
     public String getCreateQuery() {
-        return "INSERT into webUsers (login, password) VALUES(?, ?, ?, ?, ?);";
+        return "INSERT into webUsers (login, password, persons_id, right_id, status_id) " +
+                "VALUES(?, ?, " +
+                "(SELECT id FROM persons WHERE firstName = ? AND secondName = ?)," +
+                " (SELECT id FROM rights WHERE userRights = ?)," +
+                " (SELECT id FROM status WHERE userStatus = ?))";
 
     }
 
     @Override
     public String getUpdateQuery() {
-        return "UPDATE webUser SET login = ?, password = ? WHERE id =?;";
+        return "UPDATE webUser SET login = ?, password = ?, " +
+                "rights_id = (SELECT id FROM rights WHERE userRights = ?) , " +
+                "status_id = (SELECT id FROM status WHERE userStatus = ?) WHERE id =?;";
     }
 
     @Override
@@ -52,6 +62,10 @@ public class MySqlWebuserDAO extends AbstractDAO<WebUser , Integer>{
         try {
             stm.setString(1, obj.getLogin());
             stm.setString(2, obj.getPassword());
+            stm.setString(3,obj.getFirstName());
+            stm.setString(4,obj.getSecondName());
+            stm.setString(5,obj.getRights().toString());
+            stm.setString(6,obj.getStatus().toString());
         } catch (Exception e) {
             throw new DAOOwnException(e);
         }
@@ -62,7 +76,9 @@ public class MySqlWebuserDAO extends AbstractDAO<WebUser , Integer>{
         try {
             stm.setString(1, obj.getLogin());
             stm.setString(2, obj.getPassword());
-            stm.setInt(3, obj.getId());
+            stm.setString(3, obj.getRights().toString());
+            stm.setString(4, obj.getStatus().toString());
+            stm.setInt(5, obj.getId());
         } catch (Exception e) {
             throw new DAOOwnException(e);
         }
@@ -81,24 +97,8 @@ public class MySqlWebuserDAO extends AbstractDAO<WebUser , Integer>{
                 wu.setBirthDate(rs.getDate("birthDate").toLocalDate());
                 wu.setLogin(rs.getString("login"));
                 wu.setPassword(rs.getString("password"));
-                switch (rs.getInt("rights_id")){
-                    case 1:
-                        wu.setRights("Admin");
-                    case 2:
-                        wu.setRights("Moderator");
-                    case 3:
-                        wu.setRights("Default");
-                }
-                switch (rs.getInt("status_id")){
-                    case 1:
-                        wu.setStatus("New");
-                    case 2:
-                        wu.setStatus("Active");
-                    case 3:
-                        wu.setStatus("Blocked");
-                    case 4:
-                        wu.setStatus("Banned");
-                }
+                wu.setRights(rs.getInt("rights_id"));
+                wu.setStatus(rs.getInt("status_id"));
                 result.add(wu);
 
             }
@@ -110,29 +110,10 @@ public class MySqlWebuserDAO extends AbstractDAO<WebUser , Integer>{
     }
 
     @Override
-    public WebUser extCreate(WebUser obj) throws DAOOwnException {
-        return super.extCreate(obj);
+    public String getWhereForSelectQuery() {
+        return "WHERE wu.id = ";
     }
 
-    @Override
-    public WebUser getByPK(Integer id) throws DAOOwnException {
-        return super.getByPK(id);
-    }
-
-    @Override
-    public void update(WebUser obj) throws DAOOwnException {
-        super.update(obj);
-    }
-
-    @Override
-    public void delete(WebUser obj) throws DAOOwnException {
-        super.delete(obj);
-    }
-
-    @Override
-    public List<WebUser> getAll() throws DAOOwnException {
-        return super.getAll();
-    }
     @Override
     public WebUser create() throws DAOOwnException {
         WebUser wu = new WebUser();

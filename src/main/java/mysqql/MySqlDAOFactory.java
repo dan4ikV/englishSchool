@@ -62,7 +62,7 @@ public class MySqlDAOFactory implements DAOFactory<Connection> {
         daoCreatorMap.put(WebUser.class, new DAOCreator<Connection>() {
             @Override
             public GenericDAO create(Connection connection) {
-                return new MySqlPersonDAO(connection);
+                return new MySqlWebuserDAO(connection);
             }
         });
 

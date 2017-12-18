@@ -16,8 +16,8 @@ public class WebUser extends Person implements Identified<Integer>{
     private UserRights rights;
 
 
-    public WebUser(String firstName, String secondName, int id, LocalDate birthDate, String login, String password, UserStatus status, UserRights rights) {
-        super(firstName, secondName, birthDate, id);
+    public WebUser(String firstName, String secondName, LocalDate birthDate, String login, String password, UserStatus status, UserRights rights) {
+        super(firstName, secondName, birthDate);
         this.login = login;
         this.password = password;
         this.status = status;
@@ -88,6 +88,23 @@ public class WebUser extends Person implements Identified<Integer>{
         }
     }
 
+    public void setStatus(int status) {
+        switch (status) {
+            case 1:
+                this.status = UserStatus.New;
+                break;
+            case 2:
+                this.status = UserStatus.Active;
+                break;
+            case 3:
+                this.status = UserStatus.Banned;
+                break;
+            case 4:
+                this.status = UserStatus.Blocked;
+                break;
+        }
+    }
+
     public void setRights(String rights) {
         switch (rights) {
             case "Default":
@@ -97,6 +114,19 @@ public class WebUser extends Person implements Identified<Integer>{
                 this.rights = UserRights.Moderator;
                 break;
             case "Admin":
+                this.rights = UserRights.Admin;
+                break;
+        }
+    }
+    public void setRights(int rights) {
+        switch (rights) {
+            case 1:
+                this.rights = UserRights.Default;
+                break;
+            case 2:
+                this.rights = UserRights.Moderator;
+                break;
+            case 3:
                 this.rights = UserRights.Admin;
                 break;
         }

@@ -113,7 +113,7 @@ CREATE TABLE IF NOT EXISTS `servlab_danylo`.`customers` (
   INDEX `fk_customers_rights1_idx` (`rights_id` ASC),
   CONSTRAINT `fk_customers_webUsers1`
   FOREIGN KEY (`webUsers_id`, `webUsers_persons_id`)
-  REFERENCES `servlab_danylo`.`webUsers` (`id`, `persons_id`)
+  REFERENCES `servlab_danylo`.`webUsers` (`id`, personsId)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_customers_status1`
@@ -135,7 +135,7 @@ INSERT INTO rights (userRights) VALUES ('Admin'), ('Moderator'), ('Default');
 INSERT INTO status (userStatus) VALUES ('New'), ('Active'), ('Blocked'), ('Banned');
 
 INSERT INTO persons (firstName, secondName, birthDate) VALUES ('danylo', 'wasylyshyn', '2002-08-01');
-INSERT INTO webUsers (login, password, status_id, rights_id, persons_id)
+INSERT INTO webUsers (login, password, statusId, rightsId, personsId)
 VALUES ('danylo', 'dan4ikdan4ik',
         (SELECT id
          FROM status
@@ -159,7 +159,7 @@ SELECT
   cm.email
 FROM customers As cm
 JOIN webUsers As wu ON wu.id = cm.webUsers_id
-JOIN rights As rs ON rs.id = wu.rights_id
-JOIN status As st ON st.id = wu.status_id
-JOIN persons As pr ON  pr.id = wu.persons_id;
+JOIN rights As rs ON rs.id = wu.rightsId
+JOIN status As st ON st.id = wu.statusId
+JOIN persons As pr ON  pr.id = wu.personsId;
 

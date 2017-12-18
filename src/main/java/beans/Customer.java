@@ -10,8 +10,8 @@ public class Customer extends WebUser implements Identified<Integer>{
     private String email;
     private String address;
 
-    public Customer(String firstName, String secondName, int id, LocalDate birthDate, String login, String password, UserStatus status, UserRights rights, String phoneNumber, String email, String address) {
-        super(firstName, secondName, id, birthDate, login, password, status, rights);
+    public Customer(String firstName, String secondName, LocalDate birthDate, String login, String password, UserStatus status, UserRights rights, String phoneNumber, String email, String address) {
+        super(firstName, secondName, birthDate, login, password, status, rights);
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.address = address;

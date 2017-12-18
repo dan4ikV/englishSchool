@@ -18,6 +18,8 @@ public abstract class AbstractDAO<T extends Identified<PK>, PK extends Integer> 
 
     public abstract String getDeleteQuery();
 
+    public abstract String getWhereForSelectQuery();
+
     public abstract void prepareStInsert(PreparedStatement stm, T obj) throws DAOOwnException;
     public abstract void prepareStUpdate(PreparedStatement stm, T obj) throws DAOOwnException;
 
@@ -37,9 +39,10 @@ public abstract class AbstractDAO<T extends Identified<PK>, PK extends Integer> 
             throw new DAOOwnException(e);
         }
 
-        query = getSelectQuery() + "(SELECT last_insert_id())";
+        query = getSelectQuery() +getWhereForSelectQuery()+ "(SELECT last_insert_id());";
 
         try (PreparedStatement prSt = connection.prepareStatement(query)) {
+            System.out.println(prSt.toString());
             ResultSet rs = prSt.executeQuery();
             List<T> list = parsingResultSet(rs);
             if ((list == null) || (list.size() != 1)) {
@@ -58,8 +61,8 @@ public abstract class AbstractDAO<T extends Identified<PK>, PK extends Integer> 
     @Override
     public T getByPK(PK id) throws DAOOwnException {
         T object;
-        String query = getSelectQuery();
-        query+="WHERE id = ?";
+        String query = getSelectQuery()+getWhereForSelectQuery() + "?";
+
         try (PreparedStatement prSt = connection.prepareStatement(query)) {
             prSt.setInt(1,id);
             ResultSet rs = prSt.executeQuery();
