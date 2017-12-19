@@ -8,10 +8,18 @@
     <servlet-name>SaveUserServlet</servlet-name>
     <servlet-class>servlets.SaveUserServet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>ViewServlet</servlet-name>
+    <servlet-class>servlets.ViewServlet</servlet-class>
+  </servlet>
 
 
   <servlet-mapping>
     <servlet-name>SaveUserServlet</servlet-name>
     <url-pattern>/SaveUserServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ViewServlet</servlet-name>
+    <url-pattern>/ViewServlet</url-pattern>
   </servlet-mapping>
 </web-app>
